@@ -1,4 +1,4 @@
-package com.dev.pranay.user_passport_demo.models;
+package com.dev.pranay.user_passport_bidirectional.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "users")
-@Data
+@Entity
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class User {
 
     @Id
@@ -22,8 +22,7 @@ public class User {
     private String name;
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "passport_id", referencedColumnName = "id", unique = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Passport passport;
 
     @CreationTimestamp
@@ -31,11 +30,4 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime modifiedAt;
-
-
-    /*8
-    Each user can only have one passport.
-    Each passport can only belong to one user.
-    And no two passports have the same passportNumber.
-     */
 }

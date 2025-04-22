@@ -40,9 +40,27 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    @PutMapping()
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        UserDto updatedUser = userService.createOrUpdateUser(userDto);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/fetch/{id}")
+    public ResponseEntity<UserDto> fetchUserWithPassport(@PathVariable Long id) {
+        UserDto userDto = userService.fetchUserWithPassport(id);
+        return new ResponseEntity<>(userDto, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/fetchAll")
+    public ResponseEntity<List<UserDto>> findAllUsersWithPassports() {
+        List<UserDto> allUsersWithPassports = userService.findAllUsersWithPassports();
+        return new ResponseEntity<>(allUsersWithPassports, HttpStatus.OK);
     }
 }

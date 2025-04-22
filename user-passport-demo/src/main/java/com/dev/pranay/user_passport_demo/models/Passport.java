@@ -16,8 +16,13 @@ public class Passport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String passportNumber;
     private String nationality;
+
+//    @OneToOne(mappedBy = "passport") // 👈 mappedBy = "passport" ties it back to the User entity
+//    private User user;
+
 
     @CreationTimestamp
     private LocalDateTime issueDate;
