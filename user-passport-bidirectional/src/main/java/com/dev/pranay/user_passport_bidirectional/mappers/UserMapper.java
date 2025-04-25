@@ -7,22 +7,44 @@ import com.dev.pranay.user_passport_bidirectional.models.User;
 
 public class UserMapper {
 
-    public static User toEntity(UserDto userDto) {
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
+//    public static User toEntity(UserDto userDto) {
+//        User user = new User();
+//        user.setName(userDto.getName());
+//        user.setEmail(userDto.getEmail());
+//
+//        if(userDto.getPassportDto() != null) {
+//            Passport passport = new Passport();
+//            passport.setPassportNumber(userDto.getPassportDto().getPassportNumber());
+//            passport.setNationality(userDto.getPassportDto().getNationality());
+//
+//            user.setPassport(passport); // the custom setter will auto-set the user back
+////            passport.setUser(user);
+//        }
+//
+//        return user;
+//    }
 
-        if(userDto.getPassportDto() != null) {
-            Passport passport = new Passport();
-            passport.setPassportNumber(userDto.getPassportDto().getPassportNumber());
-            passport.setNationality(userDto.getPassportDto().getNationality());
+public static User toEntity(UserDto userDto) {
+    User user = new User();
+    user.setName(userDto.getName());
+    user.setEmail(userDto.getEmail());
 
-            user.setPassport(passport);
-            passport.setUser(user);
-        }
+    if(userDto.getPassportDto() != null) {
+        Passport passport = new Passport();
+        passport.setPassportNumber(userDto.getPassportDto().getPassportNumber());
+        passport.setNationality(userDto.getPassportDto().getNationality());
 
-        return user;
+        user.setPassport(passport);
+        passport.setUser(user);
+
+        System.out.println("Mapper: passport set with number = " + passport.getPassportNumber());
+    } else {
+        System.out.println("Mapper: PassportDto is null");
     }
+
+    return user;
+}
+
 
     public static UserDto toDto(User user) {
         UserDto userDto = new UserDto();
